@@ -45,5 +45,5 @@ For some reason, the tried and tested approach I've been following to deploy the
 [d]: http://docker.com
 [p]: http://python.org
 [az]: https://github.com/Azure/azure-cli
-[jitsi]: http://jitsi.meet
+[jitsi]: https://jitsi.org/jitsi-meet/
 [compose]: https://github.com/jitsi/docker-jitsi-meet 
