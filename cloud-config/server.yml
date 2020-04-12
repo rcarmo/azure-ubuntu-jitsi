@@ -443,6 +443,8 @@ write_files:
 
       # Redirects HTTP traffic to HTTPS. Only works with the standard HTTPS port (443).
       ENABLE_HTTP_REDIRECT=1
+      
+      RESTART_POLICY=always
 
 apt_update: true
 apt_upgrade: true
