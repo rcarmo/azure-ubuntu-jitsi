@@ -35,7 +35,7 @@ An Azure template and `cloud-init` setup to deploy [Jitsi Meet][jitsi] on Azure 
 ## Requirements
 
 * [Python][p]
-* The [Azure CLI][az] (`pip install -U -r requirements.txt` will install it)
+* The [Azure CLI][az] (`pip install -U azure-cli` will install/update it)
 * GNU `make` (you can just read through the `Makefile` and type the commands yourself)
 
 ## Notes
