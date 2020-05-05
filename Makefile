@@ -1,11 +1,12 @@
 # Set environment variables
 export RESOURCE_GROUP?=jitsi
 export LOCATION?=westeurope
-export ADMIN_USERNAME?=$(USER)
 export TIMESTAMP=`date "+%Y-%m-%d-%H-%M-%S"`
 export SHELL=/bin/bash
 export SSH_KEY?=$(HOME)/.ssh/id_rsa.pub
 export OWN_KEY:=True
+export ADMIN_USERNAME?=$(USER)
+export ADMIN_PASSWORD?=dont_forget_to_redefine_me_in_.env
 export LETSENCRYPT_DOMAIN?=meet.yourdomain
 export LETSENCRYPT_EMAIL?=you@yourdomain
 
