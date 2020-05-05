@@ -468,4 +468,10 @@ runcmd:
   - mv /root/.env /root/docker-jitsi-meet/.env
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
   - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
+  - sleep 30
+  - sed -i "s/SHOW_JITSI_WATERMARK: true/SHOW_JITSI_WATERMARK: false/g" /root/.jitsi-meet-cfg/web/interface_config.js
+  - sed -i "s/DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster'/DEFAULT_REMOTE_DISPLAY_NAME: 'Anonymous User'/g" /root/.jitsi-meet-cfg/web/interface_config.js
+  - sed -i "s/APP_NAME: 'Jitsi Meet'/APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
+  - sed -i "s/NATIVE_APP_NAME: 'Jitsi Meet'/NATIVE_APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
+  - sed -i "s/PROVIDER_NAME: 'Jitsi'/PROVIDER_NAME: ''/g" /root/.jitsi-meet-cfg/web/interface_config.js
   - reboot
