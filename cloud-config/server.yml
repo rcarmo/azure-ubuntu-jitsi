@@ -471,7 +471,7 @@ runcmd:
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
   - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
   - sleep 5
-  - cd /root/docker-jitsi-meet && docker-compose exec prosody  prosodyctl --config /config/prosody.cfg.lua register ${USER} meet.jitsi ${ADMIN_PASSWORD}
+  - cd /root/docker-jitsi-meet && docker-compose exec prosody  prosodyctl --config /config/prosody.cfg.lua register ${ADMIN_USERNAME} meet.jitsi ${ADMIN_PASSWORD}
   - sed -i "s/SHOW_JITSI_WATERMARK: true/SHOW_JITSI_WATERMARK: false/g" /root/.jitsi-meet-cfg/web/interface_config.js
   - sed -i "s/DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster'/DEFAULT_REMOTE_DISPLAY_NAME: 'Anonymous User'/g" /root/.jitsi-meet-cfg/web/interface_config.js
   - sed -i "s/APP_NAME: 'Jitsi Meet'/APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
