@@ -334,9 +334,6 @@ write_files:
       # See https://github.com/jitsi/jitsi-videobridge/blob/master/doc/rest.md for more information
       #JVB_ENABLE_APIS=rest,colibri
 
-      # XMPP component password for Jicofo.
-      JICOFO_COMPONENT_SECRET=s3cr37
-
       # XMPP user for Jicofo client connections. NOTE: this option doesn't currently work due to a bug.
       JICOFO_AUTH_USER=focus
 
@@ -468,6 +465,7 @@ runcmd:
   - echo "snd-aloop" >> /etc/modules
   - usermod -aG docker ${USER}
   - cd /root && git clone https://github.com/jitsi/docker-jitsi-meet
+  - echo "JICOFO_COMPONENT_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" >> /root/.env
   - mv /root/.env /root/docker-jitsi-meet/.env
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
   - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
