@@ -4,13 +4,13 @@ An Azure template and `cloud-init` setup to deploy [Jitsi Meet][jitsi] on Azure 
 
 ## Usage
 
-* Edit the `Makefile` to taste
+* Edit the `Makefile` to taste (or, even better, add a `.env` file to the repo)
 * Set up your `meet.foobar` domain name to point to `resourcegroup-hostname.region.cloudapp.azure.com`
 * `make deploy`
 
 ## Roadmap
 
-* [ ] Set up authentication
+* [x] Set up authentication
 * [x] Base server template and `cloud-config`
 
 ## `Makefile` commands
