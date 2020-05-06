@@ -136,7 +136,7 @@ write_files:
       ResourceDisk.SwapSizeMB=2048
 
   - path: /root/debrand-jitsi.sh
-    permission: 755
+    permission: 0755
     content: |
       #!/bin/bash
       
