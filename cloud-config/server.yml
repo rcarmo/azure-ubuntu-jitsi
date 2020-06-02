@@ -141,6 +141,7 @@ write_files:
       #!/bin/bash
       
       sed -i "s/SHOW_JITSI_WATERMARK: true/SHOW_JITSI_WATERMARK: false/g" /root/.jitsi-meet-cfg/web/interface_config.js
+      sed -i "s/SHOW_WATERMARK_FOR_GUESTS: true/SHOW_WATERMARK_FOR_GUESTS: false/g" /root/.jitsi-meet-cfg/web/interface_config.js
       sed -i "s/DEFAULT_REMOTE_DISPLAY_NAME: 'Fellow Jitster'/DEFAULT_REMOTE_DISPLAY_NAME: 'Anonymous User'/g" /root/.jitsi-meet-cfg/web/interface_config.js
       sed -i "s/APP_NAME: 'Jitsi Meet'/APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
       sed -i "s/NATIVE_APP_NAME: 'Jitsi Meet'/NATIVE_APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
