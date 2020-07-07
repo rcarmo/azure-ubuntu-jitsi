@@ -483,6 +483,6 @@ runcmd:
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
   - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
   - sleep 5
-  - cd /root/docker-jitsi-meet && docker-compose exec prosody prosodyctl --config /config/prosody.cfg.lua register ${JITSI_ADMIN_USERNAME} meet.jitsi ${JITSI_ADMIN_PASSWORD}
-  - /root/debrand-jitsi.sh
+  - cd /root/docker-jitsi-meet && docker-compose exec prosody /bin/bash -c 'prosodyctl --config /config/prosody.cfg.lua register ${JITSI_ADMIN_USERNAME} meet.jitsi ${JITSI_ADMIN_PASSWORD}'
+  - bash /root/debrand-jitsi.sh
   - reboot
