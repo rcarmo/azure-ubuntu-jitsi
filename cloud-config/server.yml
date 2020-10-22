@@ -481,7 +481,7 @@ runcmd:
   - echo "JVB_AUTH_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" >> /root/.env
   - mv /root/.env /root/docker-jitsi-meet/.env
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
-  - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
+  - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=stable make && docker-compose up -d
   - sleep 5
   - cd /root/docker-jitsi-meet && docker-compose exec prosody /bin/bash -c 'prosodyctl --config /config/prosody.cfg.lua register ${JITSI_ADMIN_USERNAME} meet.jitsi ${JITSI_ADMIN_PASSWORD}'
   - bash /root/debrand-jitsi.sh
