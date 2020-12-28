@@ -27,7 +27,7 @@ sizes:
 
 # Generate the Azure Resource Template parameter files
 params:
-	@mkdir parameters 2> /dev/null; python genparams.py > parameters/server.json
+	@mkdir parameters 2> /dev/null; python3 genparams.py > parameters/server.json
 
 # Cleanup parameters
 clean:
