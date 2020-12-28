@@ -147,13 +147,41 @@ write_files:
       sed -i "s/NATIVE_APP_NAME: 'Jitsi Meet'/NATIVE_APP_NAME: 'Online Conferences'/g" /root/.jitsi-meet-cfg/web/interface_config.js
       sed -i "s/PROVIDER_NAME: 'Jitsi'/PROVIDER_NAME: ''/g" /root/.jitsi-meet-cfg/web/interface_config.js
 
-  - path: /root/.env
+  - path: /root/.env.azure
     permissions: 0644
     content: |
       #
       # Jitsi configuration
       #
+
+      # Security
+      #
+      # Running ./gen-passwords.sh will update .env with strong passwords
+      # The service(s) won't start unless these are specified
+      #
       
+      # XMPP component password for Jicofo
+      JICOFO_COMPONENT_SECRET=
+
+      # XMPP password for Jicofo client connections
+      JICOFO_AUTH_PASSWORD=
+
+      # XMPP password for JVB client connections
+      JVB_AUTH_PASSWORD=
+
+      # XMPP password for Jigasi MUC client connections
+      JIGASI_XMPP_PASSWORD=
+
+      # XMPP recorder password for Jibri client connections
+      JIBRI_RECORDER_PASSWORD=
+
+      # XMPP password for Jibri client connections
+      JIBRI_XMPP_PASSWORD=
+
+      #
+      # Basic configuration options
+      #
+
       # Directory where all configuration will be stored.
       CONFIG=~/.jitsi-meet-cfg
       
@@ -169,10 +197,29 @@ write_files:
       # Public URL for the web service.
       PUBLIC_URL=https://${LETSENCRYPT_DOMAIN}
 
-      # IP address of the Docker host. See the "Running behind NAT or on a LAN environment" section
-      # in the README.
+      # IP address of the Docker host
+      # See the "Running behind NAT or on a LAN environment" section in the Handbook:
+      # https://jitsi.github.io/handbook/docs/devops-guide/devops-guide-docker#running-behind-nat-or-on-a-lan-environment
       DOCKER_HOST_ADDRESS=10.1.0.10
-          
+
+      # Control whether the lobby feature should be enabled or not
+      #ENABLE_LOBBY=1
+
+      # Show a prejoin page before entering a conference
+      #ENABLE_PREJOIN_PAGE=0
+
+      # Enable the welcome page
+      #ENABLE_WELCOME_PAGE=1
+
+      # Enable the close page
+      #ENABLE_CLOSE_PAGE=0
+
+      # Disable measuring of audio levels
+      #DISABLE_AUDIO_LEVELS=0
+
+      # Enable noisy mic detection
+      #ENABLE_NOISY_MIC_DETECTION=1
+
       #
       # Let's Encrypt configuration
       #
@@ -186,15 +233,29 @@ write_files:
       # E-Mail for receiving important account notifications (mandatory).
       LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
       
-      
+     
       #
       # Etherpad integration (for document sharing)
       #
-      
-      # Set etherpad-lite URL (uncomment to enable).
+
+      # Set etherpad-lite URL in docker local network (uncomment to enable)
       #ETHERPAD_URL_BASE=http://etherpad.meet.jitsi:9001
-      
-      
+
+      # Set etherpad-lite public URL (uncomment to enable)
+      #ETHERPAD_PUBLIC_URL=https://etherpad.my.domain
+
+      # Name your etherpad instance!
+      ETHERPAD_TITLE="Video Chat"
+
+      # The default text of a pad
+      ETHERPAD_DEFAULT_PAD_TEXT="Welcome to Web Chat!\n\n"
+
+      # Name of the skin for etherpad
+      ETHERPAD_SKIN_NAME="colibris"
+
+      # Skin variants for etherpad
+      ETHERPAD_SKIN_VARIANTS="super-light-toolbar super-light-editor light-background full-width-editor"
+
       #
       # Basic Jigasi configuration options (needed for SIP gateway support)
       #
@@ -227,6 +288,7 @@ write_files:
       # Select authentication type: internal, jwt or ldap
       #AUTH_TYPE=internal
 
+      #
       # JWT authentication
       #
 
@@ -242,7 +304,7 @@ write_files:
       # (Optional) Set asap_accepted_audiences as a comma separated list.
       #JWT_ACCEPTED_AUDIENCES=my_server1,my_server2
 
-
+      #   
       # LDAP authentication (for more information see the Cyrus SASL saslauthd.conf man page)
       #
 
@@ -314,6 +376,10 @@ write_files:
       # XMPP domain for unauthenticated users.
       XMPP_GUEST_DOMAIN=guest.meet.jitsi
 
+      # Comma separated list of domains for cross domain policy or "true" to allow all
+      # The PUBLIC_URL is always allowed
+      #XMPP_CROSS_DOMAIN=tru
+
       # Custom Prosody modules for XMPP_DOMAIN (comma separated)
       XMPP_MODULES=
 
@@ -329,11 +395,8 @@ write_files:
       # XMPP user for JVB client connections.
       JVB_AUTH_USER=jvb
 
-      # XMPP password for JVB client connections.
-      JVB_AUTH_PASSWORD=passw0rd
-
       # STUN servers used to discover the server's public IP.
-      JVB_STUN_SERVERS=stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302
+      JVB_STUN_SERVERS=meet-jit-si-turnrelay.jitsi.net:443,stun.l.google.com:19302,stun1.l.google.com:19302,stun2.l.google.com:19302
 
       # Media port for the Jitsi Videobridge
       JVB_PORT=10000
@@ -341,16 +404,22 @@ write_files:
       # TCP Fallback for Jitsi Videobridge for when UDP isn't available
       JVB_TCP_HARVESTER_DISABLED=true
       JVB_TCP_PORT=4443
+      JVB_TCP_MAPPED_PORT=4443
+
 
       # A comma separated list of APIs to enable when the JVB is started. The default is none.
       # See https://github.com/jitsi/jitsi-videobridge/blob/master/doc/rest.md for more information
       #JVB_ENABLE_APIS=rest,colibri
 
-      # XMPP user for Jicofo client connections. NOTE: this option doesn't currently work due to a bug.
+      # XMPP user for Jicofo client connections. 
+      # NOTE: this option doesn't currently work due to a bug.
       JICOFO_AUTH_USER=focus
 
       # Base URL of Jicofo's reservation REST API
       #JICOFO_RESERVATION_REST_BASE_URL=http://reservation.example.com
+
+      # Enable Jicofo's health check REST API (http://<jicofo_base_url>:8888/about/health)
+      #JICOFO_ENABLE_HEALTH_CHECKS=tru
 
       # XMPP user for Jigasi MUC client connections.
       JIGASI_XMPP_USER=jigasi
@@ -385,7 +454,7 @@ write_files:
       # Jigasi will recordord an audio when transcriber is on. Default false.
       #JIGASI_TRANSCRIBER_RECORD_AUDIO=true
 
-      # Jigasi will send transcribed text to the chat when transcriber is on. Default false.
+      # Jigasi will record audio when transcriber is on [default: false]
       #JIGASI_TRANSCRIBER_SEND_TXT=true
 
       # Jigasi post to the chat an url with transcription file. Default false.
@@ -410,14 +479,11 @@ write_files:
       # XMPP recorder user for Jibri client connections.
       JIBRI_RECORDER_USER=recorder
 
-      # XMPP recorder password for Jibri client connections.
-      JIBRI_RECORDER_PASSWORD=passw0rd
-
       # Directory for recordings inside Jibri container.
       JIBRI_RECORDING_DIR=/config/recordings
 
       # The finalizing script. Will run after recording is complete.
-      JIBRI_FINALIZE_RECORDING_SCRIPT_PATH=/config/finalize.sh
+      #JIBRI_FINALIZE_RECORDING_SCRIPT_PATH=/config/finalize.sh
 
       # XMPP user for Jibri client connections.
       JIBRI_XMPP_USER=jibri
@@ -447,9 +513,32 @@ write_files:
       # Disable HTTPS. This can be useful if TLS connections are going to be handled outside of this setup.
       #DISABLE_HTTPS=1
 
-      # Redirects HTTP traffic to HTTPS. Only works with the standard HTTPS port (443).
+
+      # Redirect HTTP traffic to HTTPS
+      # Necessary for Let's Encrypt, relies on standard HTTPS port (443)
+      #ENABLE_HTTP_REDIRECT=1
+
+      # Send a `strict-transport-security` header to force browsers to use
+      # a secure and trusted connection. Recommended for production use.
+      # Defaults to 1 (send the header).
+      # ENABLE_HSTS=1
+
+      # Enable IPv6
+      # Provides means to disable IPv6 in environments that don't support it (get with the times, people!)
+      #ENABLE_IPV6=1
+
+      # Container restart policy
+      # Defaults to unless-stopped
+      RESTART_POLICY=unless-stopped
+
+      # Authenticate using external service or just focus external auth window if there is one already.
+      # TOKEN_AUTH_URL=https://auth.meet.example.com/{room}
+
+      #
+      # OVERRIDES
+      #
+
       ENABLE_HTTP_REDIRECT=1
-      JVB_TCP_MAPPED_PORT=4443
       RESTART_POLICY=always
       ENABLE_AUTH=1
       ENABLE_GUESTS=1
@@ -475,14 +564,11 @@ runcmd:
   - echo "options snd-aloop enable=1,1,1,1,1 index=0,1,2,3,4" > /etc/modprobe.d/alsa-loopback.conf
   - echo "snd-aloop" >> /etc/modules
   - usermod -aG docker ${USER}
-  - cd /root && git clone https://github.com/jitsi/docker-jitsi-meet
-  - echo "JICOFO_COMPONENT_SECRET=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" >> /root/.env
-  - echo "JICOFO_AUTH_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" >> /root/.env
-  - echo "JVB_AUTH_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" >> /root/.env
-  - mv /root/.env /root/docker-jitsi-meet/.env
+  - cd /root && git clone https://github.com/rcarmo/docker-jitsi-meet
   - mkdir -p /root/.jitsi-meet-cfg/{web/letsencrypt,transcripts,prosody,jicofo,jvb}
-  - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=stable make && docker-compose up -d
+  - cp /root/.env.azure /root/docker-jitsi-meet/.env
+  - cd /root/docker-jitsi-meet && ./gen-passwords.sh
+  - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=unstable make && docker-compose up -d
   - sleep 5
   - cd /root/docker-jitsi-meet && docker-compose exec prosody /bin/bash -c 'prosodyctl --config /config/prosody.cfg.lua register ${JITSI_ADMIN_USERNAME} meet.jitsi ${JITSI_ADMIN_PASSWORD}'
-  - bash /root/debrand-jitsi.sh
   - reboot
