@@ -565,11 +565,15 @@ runcmd:
   - echo "snd-aloop" >> /etc/modules
   - usermod -aG docker ${USER}
   - cd /root && git clone https://github.com/rcarmo/docker-jitsi-meet
+  - mkdir -p /root/.jitsi-meet-cfg/web/crontabs
   - mkdir -p /root/.jitsi-meet-cfg/web/letsencrypt
   - mkdir -p /root/.jitsi-meet-cfg/transcripts
-  - mkdir -p /root/.jitsi-meet-cfg/prosody
+  - mkdir -p /root/.jitsi-meet-cfg/prosody/config
+  - mkdir -p /root/.jitsi-meet-cfg/prosody/prosody-plugins-custom
   - mkdir -p /root/.jitsi-meet-cfg/jicofo
   - mkdir -p /root/.jitsi-meet-cfg/jvb
+  - mkdir -p /root/.jitsi-meet-cfg/jigasi
+  - mkdir -p /root/.jitsi-meet-cfg/jibri
   - cp /root/.env.azure /root/docker-jitsi-meet/.env
   - cd /root/docker-jitsi-meet && ./gen-passwords.sh
   - cd /root/docker-jitsi-meet && FORCE_REBUILD=1 JITSI_RELEASE=stable make && docker-compose up -d
