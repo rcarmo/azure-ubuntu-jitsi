@@ -18,7 +18,7 @@ An Azure template and `cloud-init` setup to deploy [Jitsi Meet][jitsi] on Azure 
 * `make params` - generates ARM template parameters
 * `make deploy` - deploys everything
 * `make destroy` - destroys everything
-* `make redeployt` - destroys and redeploys
+* `make redeploy` - destroys and redeploys
 * `make view-deployment` - view deployment progress
 
 ## Recommended Sequence
